@@ -99,8 +99,8 @@ body {
 
 .letter {
   display: inline-block;
-  /* Dimmed state – visible but subdued */
-  color: rgba(255,255,255,0.12);
+  /* Dimmed state – visible so page isn't a black void */
+  color: rgba(255,255,255,0.28);
   transition:
     color 0.15s ease,
     text-shadow 0.3s ease,
@@ -130,18 +130,18 @@ body {
   height: 220px;
   background: linear-gradient(
     180deg,
-    #0f0f14 0%,
-    #111118 50%,
-    #0f0f14 100%
+    #0c0c12 0%,
+    #161620 50%,
+    #0c0c12 100%
   );
   overflow: hidden;
-  /* Neon edge borders */
-  border-top:    1px solid rgba(0, 198, 255, 0.25);
-  border-bottom: 1px solid rgba(0, 198, 255, 0.25);
+  /* Strong neon edge borders – clearly visible on dark bg */
+  border-top:    2px solid rgba(0, 198, 255, 0.5);
+  border-bottom: 2px solid rgba(0, 198, 255, 0.5);
   box-shadow:
-    0 -1px 30px rgba(0, 198, 255, 0.15),
-    0  1px 30px rgba(0, 198, 255, 0.15),
-    inset 0 0 80px rgba(0, 0, 0, 0.6);
+    0 -2px 40px rgba(0, 198, 255, 0.3),
+    0  2px 40px rgba(0, 198, 255, 0.3),
+    inset 0 0 80px rgba(0, 0, 0, 0.4);
   z-index: 5;
 }
 
@@ -193,16 +193,17 @@ body {
 .car {
   position: absolute;
   top: 50%;
-  margin-top: -95px;    /* half of 190px height – no transform needed for centering */
+  margin-top: -95px;    /* half of 190px height */
   left: -300px;         /* starts off-screen left */
   height: 190px;
   width: auto;
   z-index: 10;
-  /* Removes the black/white background */
+  /* screen blend: black bg becomes transparent on dark road */
   mix-blend-mode: screen;
   /* Cyan glow */
-  filter: drop-shadow(0 0 20px rgba(0, 198, 255, 0.6))
-          drop-shadow(0 10px 30px rgba(0,0,0,0.8));
+  filter: drop-shadow(0 0 25px rgba(0, 198, 255, 0.8))
+          brightness(1.2)
+          drop-shadow(0 10px 30px rgba(0,0,0,0.9));
 }
 
 /* ════════════════════════════════
