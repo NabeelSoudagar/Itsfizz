@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Itzfizz – Next-Gen Experience</title>
+  <meta name="description" content="Itzfizz – scroll-driven supercar animation. Premium scroll experience powered by GSAP." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════
+       SCROLL CANVAS  (200vh = scrollable)
+  ════════════════════════════════════ -->
+  <div class="scene">
+
+    <!-- Sticky viewport – stays pinned while user scrolls -->
+    <div class="stage" id="stage">
+
+      <!-- Ambient background orbs -->
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+
+      <!-- ── HEADLINE (above the road) ── -->
+      <div class="headline-wrap">
+        <div class="headline" id="valueText">
+          <span class="letter">W</span><span class="letter">E</span><span class="letter">L</span><span class="letter">C</span><span class="letter">O</span><span class="letter">M</span><span class="letter">E</span><span class="letter gap"></span><span class="letter">I</span><span class="letter">T</span><span class="letter">Z</span><span class="letter">F</span><span class="letter">I</span><span class="letter">Z</span><span class="letter">Z</span>
+        </div>
+      </div>
+
+      <!-- ── ROAD STRIP ── -->
+      <div class="road" id="road">
+        <!-- Asphalt texture dashes -->
+        <div class="lane-line"></div>
+
+        <!-- Glowing trail -->
+        <div class="trail" id="trail"></div>
+
+        <!-- Car (mix-blend-mode: screen removes black bg) -->
+        <img src="./assets/car.png" alt="Supercar" class="car" id="car" />
+      </div>
+
+      <!-- ── STAT BOXES ── -->
+      <div class="stat-box" id="box1">
+        <div class="stat-num">58<span>%</span></div>
+        <div class="stat-label">Increase in<br/>pick-up point use</div>
+        <div class="stat-accent"></div>
+      </div>
+
+      <div class="stat-box" id="box2">
+        <div class="stat-num">23<span>%</span></div>
+        <div class="stat-label">Decrease in<br/>customer calls</div>
+        <div class="stat-accent"></div>
+      </div>
+
+      <div class="stat-box" id="box3">
+        <div class="stat-num">27<span>%</span></div>
+        <div class="stat-label">Faster overall<br/>delivery speed</div>
+        <div class="stat-accent"></div>
+      </div>
+
+      <div class="stat-box" id="box4">
+        <div class="stat-num">40<span>%</span></div>
+        <div class="stat-label">Boost in rider<br/>retention rate</div>
+        <div class="stat-accent"></div>
+      </div>
+
+    </div><!-- /stage -->
+  </div><!-- /scene -->
+
+  <script src="script.js"></script>
+</body>
+</html>

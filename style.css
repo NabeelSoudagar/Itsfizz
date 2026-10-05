@@ -1,0 +1,297 @@
+/* ════════════════════════════════
+   RESET & BASE
+   ════════════════════════════════ */
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #050508;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════════
+   SCROLL SCENE  (200vh canvas)
+   ════════════════════════════════ */
+.scene {
+  height: 200vh;
+  position: relative;
+  background: #050508;
+}
+
+/* ════════════════════════════════
+   STICKY STAGE
+   ════════════════════════════════ */
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse 100% 80% at 50% 100%, #0d0d14 0%, #050508 70%);
+}
+
+/* ════════════════════════════════
+   AMBIENT ORBS (background glow)
+   ════════════════════════════════ */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  opacity: 0.35;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #00c6ff 0%, transparent 70%);
+  top: -200px; left: -200px;
+  animation: drift 8s ease-in-out infinite alternate;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+  bottom: -200px; right: -150px;
+  animation: drift 10s ease-in-out infinite alternate-reverse;
+}
+.orb-3 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+  top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
+}
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(40px, 30px) scale(1.1); }
+}
+
+/* ════════════════════════════════
+   HEADLINE WRAP
+   ════════════════════════════════ */
+.headline-wrap {
+  position: absolute;
+  top: 14%;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+}
+
+.headline {
+  display: flex;
+  align-items: center;
+  gap: 0.08em;
+  font-size: clamp(2.5rem, 8vw, 8rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.letter {
+  display: inline-block;
+  /* Dimmed state – visible but subdued */
+  color: rgba(255,255,255,0.12);
+  transition:
+    color 0.15s ease,
+    text-shadow 0.3s ease,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.letter.gap {
+  width: 0.5em;
+}
+
+/* Revealed state – car passes this letter */
+.letter.revealed {
+  color: #ffffff;
+  text-shadow:
+    0 0 20px rgba(0, 198, 255, 0.8),
+    0 0 60px rgba(0, 198, 255, 0.4),
+    0 0 100px rgba(124, 58, 237, 0.2);
+  transform: translateY(-6px) scale(1.08);
+}
+
+/* ════════════════════════════════
+   ROAD STRIP
+   ════════════════════════════════ */
+.road {
+  position: relative;
+  width: 100vw;
+  height: 220px;
+  background: linear-gradient(
+    180deg,
+    #0f0f14 0%,
+    #111118 50%,
+    #0f0f14 100%
+  );
+  overflow: hidden;
+  /* Neon edge borders */
+  border-top:    1px solid rgba(0, 198, 255, 0.25);
+  border-bottom: 1px solid rgba(0, 198, 255, 0.25);
+  box-shadow:
+    0 -1px 30px rgba(0, 198, 255, 0.15),
+    0  1px 30px rgba(0, 198, 255, 0.15),
+    inset 0 0 80px rgba(0, 0, 0, 0.6);
+  z-index: 5;
+}
+
+/* Dashed centre lane marker */
+.lane-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    to right,
+    rgba(255,255,255,0.06) 0px,
+    rgba(255,255,255,0.06) 50px,
+    transparent 50px,
+    transparent 90px
+  );
+}
+
+/* ════════════════════════════════
+   TRAIL  (expands behind car)
+   ════════════════════════════════ */
+.trail {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 0;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 198, 255, 0.06) 60%,
+    rgba(0, 198, 255, 0.2) 100%
+  );
+  /* Glowing right edge */
+  border-right: 2px solid rgba(0, 198, 255, 0.9);
+  box-shadow:
+    4px 0 30px rgba(0, 198, 255, 0.7),
+    8px 0 60px rgba(0, 198, 255, 0.3);
+  transition: box-shadow 0.05s;
+}
+
+/* ════════════════════════════════
+   CAR IMAGE
+   mix-blend-mode: screen removes
+   the black background cleanly
+   ════════════════════════════════ */
+.car {
+  position: absolute;
+  top: 50%;
+  margin-top: -95px;    /* half of 190px height – no transform needed for centering */
+  left: -300px;         /* starts off-screen left */
+  height: 190px;
+  width: auto;
+  z-index: 10;
+  /* Removes the black/white background */
+  mix-blend-mode: screen;
+  /* Cyan glow */
+  filter: drop-shadow(0 0 20px rgba(0, 198, 255, 0.6))
+          drop-shadow(0 10px 30px rgba(0,0,0,0.8));
+}
+
+/* ════════════════════════════════
+   STAT BOXES  (glassmorphism)
+   ════════════════════════════════ */
+.stat-box {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(30px) scale(0.96);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px 28px;
+  min-width: 210px;
+
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  z-index: 15;
+  overflow: hidden;
+}
+
+/* Coloured accent top-border per box */
+.stat-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: 20px 20px 0 0;
+}
+
+/* Inner glow dot */
+.stat-accent {
+  position: absolute;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  filter: blur(30px);
+  bottom: -20px; right: -20px;
+  opacity: 0.5;
+}
+
+/* Individual box colours */
+#box1 { top: 12%; right: 32%; }
+#box1::before { background: linear-gradient(90deg, #d4f026, #a8e000); }
+#box1 .stat-num { color: #d4f026; }
+#box1 .stat-accent { background: #d4f026; }
+
+#box2 { bottom: 12%; right: 36%; }
+#box2::before { background: linear-gradient(90deg, #00c6ff, #0072ff); }
+#box2 .stat-num { color: #00c6ff; }
+#box2 .stat-accent { background: #00c6ff; }
+
+#box3 { top: 12%; right: 8%; }
+#box3::before { background: linear-gradient(90deg, #a78bfa, #7c3aed); }
+#box3 .stat-num { color: #a78bfa; }
+#box3 .stat-accent { background: #7c3aed; }
+
+#box4 { bottom: 12%; right: 8%; }
+#box4::before { background: linear-gradient(90deg, #fb923c, #ea580c); }
+#box4 .stat-num { color: #fb923c; }
+#box4 .stat-accent { background: #fb923c; }
+
+.stat-num {
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.stat-num span {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0;
+  opacity: 0.8;
+}
+.stat-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.55;
+}
+
+/* ════════════════════════════════
+   SCROLLBAR
+   ════════════════════════════════ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #050508; }
+::-webkit-scrollbar-thumb { background: #1e1e2e; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2e2e4e; }
